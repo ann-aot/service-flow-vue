@@ -30,15 +30,15 @@ import axios from "axios";
 export default class TaskList extends Vue {
   @Prop() private getTaskId!: string;
   public configs = {
-    BPM_URL: "https://bpm2.aot-technologies.com/camunda",
-    FORM_IO_API_URL: "https://forms2.aot-technologies.com",
-    FORM_IO_RESOURCE_ID: "60f552cb82fcd45be52ede58",
-    FORM_IO_REVIEWER_ID: "60f552cb82fcd4689d2ede56",
-    FORM_IO_REVIEWER: "formsflow-reviewer",
-    FORM_FLOW_API_URL: "http://206.116.106.147:5000/",
-    FORM_FLOW_URL: "http://localhost:3000",
+    BPM_URL: process.env.VUE_APP_BPM_URL,
+    FORM_IO_API_URL: process.env.VUE_APP_FORM_IO_API_URL,
+    FORM_IO_RESOURCE_ID: process.env.VUE_APP_FORM_IO_RESOURCE_ID,
+    FORM_IO_REVIEWER_ID: process.env.VUE_APP_FORM_IO_REVIEWER_ID,
+    FORM_IO_REVIEWER: process.env.VUE_APP_FORM_IO_REVIEWER,
+    FORM_FLOW_API_URL: process.env.VUE_APP_FORM_FLOW_API_URL,
+    FORM_FLOW_URL: process.env.VUE_APP_FORM_FLOW_URL,
     SERVICEFLOW_ENABLED: true,
-    FORMIO_ROLES: ["formsflow-reviewer"],
+    FORMIO_ROLES: process.env.VUE_APP_FORMIO_ROLES,
   };
 
   public isServiceFLowEnabled = true;
@@ -60,8 +60,9 @@ export default class TaskList extends Vue {
     params.append("password", "aot123");
     params.append("client_id", "forms-flow-web");
 
-    const url =
-      "https://iam.aot-technologies.com/auth/realms/formsflow-ai-willow/protocol/openid-connect/token";
+    const url = `${process.env.VUE_APP_KEYCLOAK_URL}/auth/realms/${process.env.VUE_APP_KEYCLOAK_URL_REALM}/protocol/openid-connect/token`;
+    console.log(url);
+    // "https://iam.aot-technologies.com/auth/realms/formsflow-ai-willow/protocol/openid-connect/token";
     await axios.post(url, params, config).then((result: any) => {
       this.jwttoken = result.data.access_token;
     });
