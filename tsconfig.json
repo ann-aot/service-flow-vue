@@ -39,7 +39,7 @@
     "src/**/*.vue",
     "tests/**/*.ts",
     "tests/**/*.tsx",
-    "index.d.ts",
+    "index.d.ts", "src/plugins/authentication.js",
   ],
   "exclude": [
     "node_modules"
