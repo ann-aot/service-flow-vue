@@ -10,7 +10,7 @@ const options = {
 const _keycloak = Keycloak(options);
 
 const Plugin = {
-  install (Vue) {
+  install(Vue) {
     Vue.$keycloak = _keycloak;
   },
 };
