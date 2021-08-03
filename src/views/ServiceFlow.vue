@@ -1,8 +1,8 @@
 <template>
-  <div v-if="token">
+  <div v-if="jwttoken">
     <CamundaTasklist
       :bpmApiUrl="configs.BPM_URL"
-      :token="token"
+      :token="jwttoken"
       :formIOApiUrl="configs.FORM_IO_API_URL"
       :formIOResourceId="configs.FORM_IO_RESOURCE_ID"
       :formIOReviewerId="configs.FORM_IO_REVIEWER_ID"
@@ -14,7 +14,10 @@
       v-if="isServiceFLowEnabled"
     />
   </div>
-  <div class="no-content" v-else>You shouldnot be here !!!</div>
+  <div class="no-content" v-else>
+    You shouldnot be here !!!
+    <h1>Hello</h1>
+  </div>
 </template>
 
 <script lang="ts">
@@ -44,38 +47,34 @@ export default class TaskList extends Vue {
   public isServiceFLowEnabled = true;
   public jwttoken: any = false;
 
-  get token() {
-    return this.jwttoken;
-  }
+  // async getToken() {
+  //   const config = {
+  //     headers: {
+  //       "Content-Type": "application/x-www-form-urlencoded",
+  //     },
+  //   };
+  //   const params = new URLSearchParams();
+  //   params.append("grant_type", "password");
+  //   params.append("username", "nancy-smith");
+  //   params.append("password", "aot123");
+  //   params.append("client_id", "forms-flow-web");
 
-  async getToken() {
-    const config = {
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
-      },
-    };
-    const params = new URLSearchParams();
-    params.append("grant_type", "password");
-    params.append("username", "nancy-smith");
-    params.append("password", "aot123");
-    params.append("client_id", "forms-flow-web");
+  //   const url = `${process.env.VUE_APP_KEYCLOAK_URL}/auth/realms/${process.env.VUE_APP_KEYCLOAK_URL_REALM}/protocol/openid-connect/token`;
+  //   console.log(url);
+  //   // "https://iam.aot-technologies.com/auth/realms/formsflow-ai-willow/protocol/openid-connect/token";
+  //   await axios.post(url, params, config).then((result: any) => {
+  //     this.jwttoken = result.data.access_token;
+  //   });
+  // }
 
-    const url = `${process.env.VUE_APP_KEYCLOAK_URL}/auth/realms/${process.env.VUE_APP_KEYCLOAK_URL_REALM}/protocol/openid-connect/token`;
-    console.log(url);
-    // "https://iam.aot-technologies.com/auth/realms/formsflow-ai-willow/protocol/openid-connect/token";
-    await axios.post(url, params, config).then((result: any) => {
-      this.jwttoken = result.data.access_token;
-    });
-  }
-
-  created() {
-    this.getToken();
-  }
+  // created() {
+  //   this.getToken();
+  // }
 
   mounted() {
-    // this.token = sessionStorage.getItem('token')
+    this.jwttoken = Vue.$keycloak.token;
     this.isServiceFLowEnabled = true;
-    this.getToken();
+    // this.getToken();
     //this.token()
   }
 }
