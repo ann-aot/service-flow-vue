@@ -1,5 +1,6 @@
 <template>
   <div v-if="jwttoken">
+    <Header />
     <CamundaTasklist
       :bpmApiUrl="configs.BPM_URL"
       :token="jwttoken"
@@ -22,12 +23,13 @@
 
 <script lang="ts">
 import CamundaTasklist from "camunda-formio-tasklist-vue/src/components/TaskList.vue";
+import Header from "@/components/layouts/Header.vue";
 import { Component, Prop, Vue } from "vue-property-decorator";
-import axios from "axios";
 
 @Component({
   components: {
     CamundaTasklist,
+    Header,
   },
 })
 export default class TaskList extends Vue {
@@ -47,37 +49,9 @@ export default class TaskList extends Vue {
   public isServiceFLowEnabled = true;
   public jwttoken: any = false;
 
-  // async getToken() {
-  //   const config = {
-  //     headers: {
-  //       "Content-Type": "application/x-www-form-urlencoded",
-  //     },
-  //   };
-  //   const params = new URLSearchParams();
-  //   params.append("grant_type", "password");
-  //   params.append("username", "nancy-smith");
-  //   params.append("password", "aot123");
-  //   params.append("client_id", "forms-flow-web");
-
-  //   const url = `${process.env.VUE_APP_KEYCLOAK_URL}/auth/realms/${process.env.VUE_APP_KEYCLOAK_URL_REALM}/protocol/openid-connect/token`;
-  //   console.log(url);
-  //   // "https://iam.aot-technologies.com/auth/realms/formsflow-ai-willow/protocol/openid-connect/token";
-  //   await axios.post(url, params, config).then((result: any) => {
-  //     this.jwttoken = result.data.access_token;
-  //   });
-  // }
-
-  // created() {
-  //   this.getToken();
-  // }
-
-  mounted() {
+  created() {
     this.jwttoken = Vue.$keycloak.token;
     this.isServiceFLowEnabled = true;
-    // this.getToken();
-    //this.token()
   }
 }
 </script>
-
-<style scoped></style>

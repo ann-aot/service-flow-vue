@@ -12,7 +12,7 @@ const routes: Array<RouteConfig> = [
     component: ServiceFlow,
     meta: {
       requiresAuth: true,
-    }
+    },
   },
   {
     path: "/unauthorized",
@@ -20,7 +20,7 @@ const routes: Array<RouteConfig> = [
     component: Unauthorized,
     meta: {
       requiresAuth: false,
-    }
+    },
   },
 ];
 
@@ -33,27 +33,24 @@ const router = new VueRouter({
 router.beforeEach((to, from, next) => {
   if (to.meta?.requiresAuth) {
     const baseUrl = window.location.toString();
-    if (! Vue.$keycloak.authenticated) {
+    if (!Vue.$keycloak.authenticated) {
       Vue.$keycloak.login({
-        redirectUri: baseUrl.slice(0, -1) + to.path})
+        redirectUri: baseUrl.slice(0, -1) + to.path,
+      });
+    } else if (Vue.$keycloak.hasResourceRole("formsflow-reviewer")) {
+      Vue.$keycloak
+        .updateToken(70)
+        .then(() => {
+          next();
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    } else {
+      next({ name: "Unauthorized" });
     }
-
-    else if (Vue.$keycloak.hasResourceRole('formsflow-reviewer')) {
-      Vue.$keycloak.updateToken(70)
-      .then(() => {
-        next()
-      })
-      .catch((error) => {
-        console.error(error);
-      })
-    }
-    else {
-      next({ name: 'Unauthorized' })
-    }
-  }
-
-  else {
-    next()
+  } else {
+    next();
   }
 });
 
