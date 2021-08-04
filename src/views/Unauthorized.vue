@@ -1,8 +1,19 @@
 <template>
-  <b-container>
-    <b-row justify="center">
-      <h1>Unauthorized</h1>
-      <h2>Try logging in again</h2>
+  <b-container fluid>
+    <b-row class="mb-3 header">
+      <b-col md="4">
+        <b-img
+          src="https://user-images.githubusercontent.com/70306694/124284590-c3078b80-db6a-11eb-81c7-921cfbe46495.png"
+        >
+        </b-img>
+      </b-col>
+    </b-row>
+    <b-row class="mb-3">
+      <b-col md="12" class="d-flex justify-content-around">
+        <h1>You are unauthorised</h1>
+        <b-img src="https://kurianbenoy.com/assets/img/404-southpark.jpg">
+        </b-img>
+      </b-col>
     </b-row>
   </b-container>
 </template>
@@ -13,3 +24,9 @@ import { Component, Vue } from "vue-property-decorator";
 @Component
 export default class Unauthorized extends Vue {}
 </script>
+
+<style scoped>
+.header {
+  background-color: #fdb44e;
+}
+</style>
