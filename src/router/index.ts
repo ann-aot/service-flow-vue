@@ -1,5 +1,6 @@
 import Vue from "vue";
 import VueRouter, { RouteConfig } from "vue-router";
+import FormViewSubmission from "@/components/FormViewSubmission.vue";
 import ServiceFlow from "../views/ServiceFlow.vue";
 import Unauthorized from "../views/Unauthorized.vue";
 
@@ -20,6 +21,14 @@ const routes: Array<RouteConfig> = [
     component: Unauthorized,
     meta: {
       requiresAuth: false,
+    },
+  },
+  {
+    path: '/form/:formId/submission/:submissionId',
+    name: 'Formio forms list',
+    component: FormViewSubmission,
+    meta: {
+      requiresAuth: true,
     },
   },
 ];
