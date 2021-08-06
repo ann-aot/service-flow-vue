@@ -22,9 +22,9 @@
 </template>
 
 <script lang="ts">
+import { Component, Prop, Vue } from "vue-property-decorator";
 import CamundaTasklist from "camunda-formio-tasklist-vue/src/components/TaskList.vue";
 import Header from "@/components/layouts/Header.vue";
-import { Component, Prop, Vue } from "vue-property-decorator";
 
 @Component({
   components: {
@@ -46,8 +46,8 @@ export default class TaskList extends Vue {
     FORMIO_ROLES: process.env.VUE_APP_FORMIO_ROLES,
   };
 
-  public isServiceFLowEnabled = true;
-  public jwttoken: any = false;
+  public isServiceFLowEnabled: boolean = true;
+  public jwttoken: string | boolean = false;
 
   created() {
     this.jwttoken = Vue.$keycloak.token;

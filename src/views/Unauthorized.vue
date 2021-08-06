@@ -34,7 +34,6 @@ export default class Unauthorized extends Vue {
   backClick() {
     Vue.$keycloak.logout({ redirectUri: window.location.origin });
   }
-
 }
 </script>
 
