@@ -13,6 +13,7 @@
       :formIOUserRoles="configs.FORMIO_ROLES"
       :getTaskId="getTaskId"
       v-if="isServiceFLowEnabled"
+      :container-height="120"
     />
   </div>
   <div class="no-content" v-else>
