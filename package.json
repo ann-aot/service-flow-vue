@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "bootstrap-vue": "^2.21.2",
-    "camunda-formio-tasklist-vue": "^1.0.10",
+    "camunda-formio-tasklist-vue": "https://gitpkg.now.sh/AOT-Technologies/forms-flow-ai-extensions/camunda-formio-tasklist-vue?preformance/temp",
     "core-js": "^3.6.5",
     "keycloak-js": "^9.0.3",
     "node-sass": "^4.14.1",

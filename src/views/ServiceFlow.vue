@@ -12,6 +12,10 @@
       :formsflowaiApiUrl="configs.FORM_FLOW_API_URL"
       :formIOUserRoles="configs.FORMIO_ROLES"
       :getTaskId="getTaskId"
+      container-height="140"
+      taskSortBy="dueDate"
+      taskSortOrder="asc"
+      webSocketEncryptkey="giert989jkwrgb@DR55"
       v-if="isServiceFLowEnabled"
     />
   </div>
