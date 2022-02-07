@@ -31,12 +31,12 @@ export default class Header extends Vue {
   private lastName = "";
 
   logout() {
-    Vue.$keycloak.logout({ redirectUri: window.location.origin });
+    Vue.prototype.$keycloak.logout({ redirectUri: window.location.origin });
   }
 
   mounted() {
-    this.firstName = Vue.$keycloak.tokenParsed.given_name;
-    this.lastName = Vue.$keycloak.tokenParsed.family_name;
+    this.firstName = Vue.prototype.$keycloak.tokenParsed.given_name;
+    this.lastName = Vue.prototype.$keycloak.tokenParsed.family_name;
   }
 }
 </script>

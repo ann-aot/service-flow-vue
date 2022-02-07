@@ -32,7 +32,7 @@ import { Component, Vue } from "vue-property-decorator";
 @Component
 export default class Unauthorized extends Vue {
   backClick() {
-    Vue.$keycloak.logout({ redirectUri: window.location.origin });
+    Vue.prototype.$keycloak.logout({ redirectUri: window.location.origin });
   }
 }
 </script>

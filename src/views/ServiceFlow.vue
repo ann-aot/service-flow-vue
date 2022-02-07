@@ -14,6 +14,7 @@
       :getTaskId="getTaskId"
       container-height="140"
       taskSortBy="dueDate"
+      formIOJwtSecret="--- change me now ---"
       taskSortOrder="asc"
       webSocketEncryptkey="giert989jkwrgb@DR55"
       v-if="isServiceFLowEnabled"
@@ -54,7 +55,7 @@ export default class TaskList extends Vue {
   public jwttoken: string | boolean = false;
 
   created() {
-    this.jwttoken = Vue.$keycloak.token;
+    this.jwttoken = Vue.prototype.$keycloak.token;
     this.isServiceFLowEnabled = true;
   }
 }

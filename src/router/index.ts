@@ -42,12 +42,12 @@ const router = new VueRouter({
 router.beforeEach((to, from, next) => {
   if (to.meta?.requiresAuth) {
     const baseUrl = window.location.toString();
-    if (!Vue.$keycloak.authenticated) {
-      Vue.$keycloak.login({
+    if (!Vue.prototype.$keycloak.authenticated) {
+      Vue.prototype.$keycloak.login({
         redirectUri: baseUrl.slice(0, -1) + to.path,
       });
-    } else if (Vue.$keycloak.hasResourceRole("formsflow-reviewer")) {
-      Vue.$keycloak
+    } else if (Vue.prototype.$keycloak.hasResourceRole("formsflow-reviewer")) {
+      Vue.prototype.$keycloak
         .updateToken(70)
         .then(() => {
           next();
