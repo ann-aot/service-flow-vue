@@ -12,7 +12,6 @@
       :formsflowaiApiUrl="configs.FORM_FLOW_API_URL"
       :formIOUserRoles="configs.FORMIO_ROLES"
       :getTaskId="getTaskId"
-      container-height="140"
       taskSortBy="dueDate"
       formIOJwtSecret="--- change me now ---"
       taskSortOrder="asc"
