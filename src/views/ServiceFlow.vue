@@ -18,6 +18,7 @@
       taskSortOrder="asc"
       webSocketEncryptkey="giert989jkwrgb@DR55"
       v-if="isServiceFLowEnabled"
+      :container-height="120"
     />
   </div>
   <div class="no-content" v-else>

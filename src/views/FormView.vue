@@ -1,13 +1,13 @@
 <template>
   <div>
-  <Header/>
-  <div>
-    <FormViewSubmission
-      v-if="formId && submissionId"
-      :formid="formId"
-      :submissionid="submissionId"
-    />
-  </div>
+    <Header />
+    <div>
+      <FormViewSubmission
+        v-if="formId && submissionId"
+        :formid="formId"
+        :submissionid="submissionId"
+      />
+    </div>
   </div>
 </template>
 
