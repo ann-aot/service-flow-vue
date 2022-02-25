@@ -1,8 +1,9 @@
 <template>
-  <div v-if="token">
+  <div v-if="jwttoken">
+    <Header />
     <CamundaTasklist
       :bpmApiUrl="configs.BPM_URL"
-      :token="token"
+      :token="jwttoken"
       :formIOApiUrl="configs.FORM_IO_API_URL"
       :formIOResourceId="configs.FORM_IO_RESOURCE_ID"
       :formIOReviewerId="configs.FORM_IO_REVIEWER_ID"
@@ -11,73 +12,51 @@
       :formsflowaiApiUrl="configs.FORM_FLOW_API_URL"
       :formIOUserRoles="configs.FORMIO_ROLES"
       :getTaskId="getTaskId"
+      taskSortBy="dueDate"
+      formIOJwtSecret="--- change me now ---"
+      taskSortOrder="asc"
+      webSocketEncryptkey="giert989jkwrgb@DR55"
       v-if="isServiceFLowEnabled"
+      :container-height="120"
     />
   </div>
-  <div class="no-content" v-else>You shouldnot be here !!!</div>
+  <div class="no-content" v-else>
+    You shouldnot be here !!!
+    <h1>Hello</h1>
+  </div>
 </template>
 
 <script lang="ts">
-import CamundaTasklist from "camunda-formio-tasklist-vue/src/components/TaskList.vue";
 import { Component, Prop, Vue } from "vue-property-decorator";
-import axios from "axios";
+import CamundaTasklist from "camunda-formio-tasklist-vue/src/components/TaskList.vue";
+import Header from "@/components/layouts/Header.vue";
 
 @Component({
   components: {
     CamundaTasklist,
+    Header,
   },
 })
 export default class TaskList extends Vue {
   @Prop() private getTaskId!: string;
   public configs = {
-    BPM_URL: "https://bpm2.aot-technologies.com/camunda",
-    FORM_IO_API_URL: "https://forms2.aot-technologies.com",
-    FORM_IO_RESOURCE_ID: "60f552cb82fcd45be52ede58",
-    FORM_IO_REVIEWER_ID: "60f552cb82fcd4689d2ede56",
-    FORM_IO_REVIEWER: "formsflow-reviewer",
-    FORM_FLOW_API_URL: "http://206.116.106.147:5000/",
-    FORM_FLOW_URL: "http://localhost:3000",
+    BPM_URL: process.env.VUE_APP_BPM_URL,
+    FORM_IO_API_URL: process.env.VUE_APP_FORM_IO_API_URL,
+    FORM_IO_RESOURCE_ID: process.env.VUE_APP_FORM_IO_RESOURCE_ID,
+    FORM_IO_REVIEWER_ID: process.env.VUE_APP_FORM_IO_REVIEWER_ID,
+    FORM_IO_REVIEWER: process.env.VUE_APP_FORM_IO_REVIEWER,
+    FORM_FLOW_API_URL: process.env.VUE_APP_FORM_FLOW_API_URL,
+    FORM_FLOW_URL: process.env.VUE_APP_FORM_FLOW_URL,
     SERVICEFLOW_ENABLED: true,
-    FORMIO_ROLES: ["formsflow-reviewer"],
+    FORMIO_ROLES: process.env.VUE_APP_FORMIO_ROLES,
   };
 
-  public isServiceFLowEnabled = true;
-  public jwttoken: any = false;
-
-  get token() {
-    return this.jwttoken;
-  }
-
-  async getToken() {
-    const config = {
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
-      },
-    };
-    const params = new URLSearchParams();
-    params.append("grant_type", "password");
-    params.append("username", "nancy-smith");
-    params.append("password", "aot123");
-    params.append("client_id", "forms-flow-web");
-
-    const url =
-      "https://iam.aot-technologies.com/auth/realms/formsflow-ai-willow/protocol/openid-connect/token";
-    await axios.post(url, params, config).then((result: any) => {
-      this.jwttoken = result.data.access_token;
-    });
-  }
+  public isServiceFLowEnabled: boolean = true;
+  public jwttoken: string | boolean = false;
 
   created() {
-    this.getToken();
-  }
-
-  mounted() {
-    // this.token = sessionStorage.getItem('token')
+    this.jwttoken = Vue.prototype.$keycloak.token;
     this.isServiceFLowEnabled = true;
-    this.getToken();
-    //this.token()
   }
 }
 </script>
-
-<style scoped></style>
